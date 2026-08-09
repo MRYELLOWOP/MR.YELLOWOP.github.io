@@ -2,15 +2,35 @@
 <html lang="fa" dir="rtl">
 
 <head>
+
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="MR.YELLOW - صفحه رسمی"
+    >
 
     <title>MR.YELLOW</title>
 
-    <link rel="stylesheet" href="style.css">
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
 </head>
 
+
 <body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
 
 <header>
 
@@ -18,26 +38,43 @@
         MR.YELLOW
     </div>
 
-    <button class="menu-btn" onclick="toggleMenu()" aria-label="منو">
+
+    <button
+        class="menu-btn"
+        onclick="toggleMenu()"
+        aria-label="باز کردن منو"
+        type="button"
+    >
         ☰
     </button>
 
 </header>
 
 
-<nav class="menu" id="menu">
+
+<!-- =========================
+     MENU
+========================= -->
+
+<nav
+    class="menu"
+    id="menu"
+>
 
     <div class="menu-title">
         MR.YELLOW 🟡
     </div>
 
+
     <a href="index.html">
         🏠 خانه
     </a>
 
+
     <a href="social.html">
         🌐 شبکه اجتماعی
     </a>
+
 
     <a href="comingsoon.html">
         ⏳ بزودی
@@ -46,62 +83,132 @@
 </nav>
 
 
+
+<!-- =========================
+     MAIN
+========================= -->
+
 <main>
+
 
     <section class="hero">
 
+
         <div class="yellow-dot"></div>
+
+
 
         <h1>
             MR.YELLOW
         </h1>
+
+
 
         <p class="subtitle">
             به دنیای MR.YELLOW خوش اومدی 🟡
         </p>
 
 
-        <div id="streamStatus" class="status offline">
+
+        <!-- =========================
+             STREAM STATUS
+        ========================= -->
+
+        <div
+            id="streamStatus"
+            class="status offline"
+        >
             🔴 OFFLINE
         </div>
 
 
+
+        <!-- =========================
+             COUNTDOWN
+        ========================= -->
+
         <div class="countdown-box">
 
+
             <h2>
-                شروع بزرگ
+                ⏳ شمارش معکوس
             </h2>
 
+
             <p>
-                زمان باقی‌مانده
+                زمان باقی‌مانده تا شروع
             </p>
+
+
 
             <div class="timer">
 
-                <div class="time">
-                    <strong id="days">00</strong>
-                    <span>روز</span>
-                </div>
 
                 <div class="time">
-                    <strong id="hours">00</strong>
-                    <span>ساعت</span>
+
+                    <strong id="days">
+                        00
+                    </strong>
+
+                    <span>
+                        روز
+                    </span>
+
                 </div>
 
-                <div class="time">
-                    <strong id="minutes">00</strong>
-                    <span>دقیقه</span>
-                </div>
+
 
                 <div class="time">
-                    <strong id="seconds">00</strong>
-                    <span>ثانیه</span>
+
+                    <strong id="hours">
+                        00
+                    </strong>
+
+                    <span>
+                        ساعت
+                    </span>
+
                 </div>
+
+
+
+                <div class="time">
+
+                    <strong id="minutes">
+                        00
+                    </strong>
+
+                    <span>
+                        دقیقه
+                    </span>
+
+                </div>
+
+
+
+                <div class="time">
+
+                    <strong id="seconds">
+                        00
+                    </strong>
+
+                    <span>
+                        ثانیه
+                    </span>
+
+                </div>
+
 
             </div>
 
+
         </div>
 
+
+
+        <!-- =========================
+             DONATE
+        ========================= -->
 
         <a
             class="donate-btn"
@@ -109,37 +216,67 @@
             target="_blank"
             rel="noopener noreferrer"
         >
-            💰 حمایت از MR.YELLOW
+            💛 حمایت از MR.YELLOW
         </a>
 
 
+
+        <!-- =========================
+             CREATOR
+        ========================= -->
+
         <div class="creator">
+
 
             <span>
                 ساخته شده توسط
             </span>
 
+
             <strong>
                 Ariyan
             </strong>
+
 
             <small>
                 @Ariyanir299
             </small>
 
+
         </div>
 
+
     </section>
+
 
 </main>
 
 
+
+<!-- =========================
+     FOOTER
+========================= -->
+
 <footer>
+
     © MR.YELLOW
+
+    <br>
+
+    ساخته شده توسط
+    <strong>Ariyan</strong>
+
 </footer>
 
 
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
 <script src="script.js"></script>
 
+
 </body>
+
 </html>
