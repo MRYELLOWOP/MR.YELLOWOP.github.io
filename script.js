@@ -3,142 +3,52 @@
 ========================= */
 
 function toggleMenu() {
-
     const menu = document.getElementById("menu");
-
-    if (!menu) return;
-
-    menu.classList.toggle("open");
+    if (menu) menu.classList.toggle("open");
 }
 
 
-/* بستن منو با کلیک روی لینک */
-
-document.addEventListener("click", function(event) {
-
-    const menu = document.getElementById("menu");
-    const button = document.querySelector(".menu-btn");
-
-    if (!menu || !button) return;
-
-    if (
-        menu.classList.contains("open") &&
-        !menu.contains(event.target) &&
-        !button.contains(event.target)
-    ) {
-
-        menu.classList.remove("open");
-
-    }
-
-});
-
-
 /* =========================
-   TIMER
+   TIMER - SHARED FOR EVERYONE
 ========================= */
 
-/*
-   این تاریخ برای همه کاربران یکی است.
-
-   شروع: 10 روز
-   پایان: 20 August 2026 - 00:00
-*/
-
-const targetDate =
-    new Date("2026-08-20T00:00:00+03:30").getTime();
+// زمان پایان مشترک برای همه کاربران
+// این تاریخ را بعداً فقط یک بار تغییر می‌دهیم.
+const TARGET_DATE = new Date("2026-08-20T00:00:00+03:30").getTime();
 
 
 function updateTimer() {
 
-    const now = Date.now();
+    const remaining = Math.max(0, TARGET_DATE - Date.now());
 
-    let difference = targetDate - now;
+    const days = Math.floor(
+        remaining / (1000 * 60 * 60 * 24)
+    );
 
+    const hours = Math.floor(
+        (remaining / (1000 * 60 * 60)) % 24
+    );
 
-    if (difference <= 0) {
+    const minutes = Math.floor(
+        (remaining / (1000 * 60)) % 60
+    );
 
-        difference = 0;
+    const seconds = Math.floor(
+        (remaining / 1000) % 60
+    );
 
-    }
+    const d = document.getElementById("days");
+    const h = document.getElementById("hours");
+    const m = document.getElementById("minutes");
+    const s = document.getElementById("seconds");
 
-
-    const days =
-        Math.floor(
-            difference / (1000 * 60 * 60 * 24)
-        );
-
-
-    const hours =
-        Math.floor(
-            (difference / (1000 * 60 * 60)) % 24
-        );
-
-
-    const minutes =
-        Math.floor(
-            (difference / (1000 * 60)) % 60
-        );
-
-
-    const seconds =
-        Math.floor(
-            (difference / 1000) % 60
-        );
-
-
-    const daysElement =
-        document.getElementById("days");
-
-
-    const hoursElement =
-        document.getElementById("hours");
-
-
-    const minutesElement =
-        document.getElementById("minutes");
-
-
-    const secondsElement =
-        document.getElementById("seconds");
-
-
-    if (daysElement) {
-
-        daysElement.textContent =
-            String(days).padStart(2, "0");
-
-    }
-
-
-    if (hoursElement) {
-
-        hoursElement.textContent =
-            String(hours).padStart(2, "0");
-
-    }
-
-
-    if (minutesElement) {
-
-        minutesElement.textContent =
-            String(minutes).padStart(2, "0");
-
-    }
-
-
-    if (secondsElement) {
-
-        secondsElement.textContent =
-            String(seconds).padStart(2, "0");
-
-    }
-
+    if (d) d.textContent = String(days).padStart(2, "0");
+    if (h) h.textContent = String(hours).padStart(2, "0");
+    if (m) m.textContent = String(minutes).padStart(2, "0");
+    if (s) s.textContent = String(seconds).padStart(2, "0");
 }
 
-
 updateTimer();
-
 setInterval(updateTimer, 1000);
 
 
@@ -146,48 +56,67 @@ setInterval(updateTimer, 1000);
    KICK STATUS
 ========================= */
 
-/*
-   فعلاً وضعیت را دستی کنترل می‌کنیم
-   تا چیزی خراب یا وابسته به API خارجی نباشد.
+async function checkKickStatus() {
 
-   وقتی لایو شد:
-   true
-
-   وقتی آفلاین شد:
-   false
-*/
-
-const isLive = false;
-
-
-function updateStreamStatus() {
-
-    const status =
-        document.getElementById("streamStatus");
-
+    const status = document.getElementById("streamStatus");
 
     if (!status) return;
 
+    try {
 
-    if (isLive) {
+        /*
+         * وضعیت کانال mryellowop
+         * از سرویس واسط عمومی خوانده می‌شود.
+         */
 
-        status.classList.remove("offline");
+        const response = await fetch(
+            "https://kick.com/api/v2/channels/mryellowop",
+            {
+                cache: "no-store"
+            }
+        );
 
-        status.classList.add("online");
+        if (!response.ok) {
+            throw new Error("Kick request failed");
+        }
 
-        status.textContent = "🟢 ONLINE";
+        const data = await response.json();
 
-    } else {
+        const live =
+            data &&
+            data.livestream !== null &&
+            data.livestream !== undefined;
 
-        status.classList.remove("online");
 
-        status.classList.add("offline");
+        if (live) {
 
+            status.className = "status online";
+            status.textContent = "🟢 ONLINE";
+
+        } else {
+
+            status.className = "status offline";
+            status.textContent = "🔴 OFFLINE";
+
+        }
+
+    } catch (error) {
+
+        /*
+         * اگر Kick پاسخ نداد،
+         * سایت خراب نمی‌شود.
+         */
+
+        status.className = "status offline";
         status.textContent = "🔴 OFFLINE";
 
-    }
+        console.log("Kick status error:", error);
 
+    }
 }
 
 
-updateStreamStatus();
+checkKickStatus();
+
+// هر 60 ثانیه دوباره بررسی می‌کند
+setInterval(checkKickStatus, 60000);
