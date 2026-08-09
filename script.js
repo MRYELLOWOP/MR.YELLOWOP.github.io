@@ -1,150 +1,193 @@
-// =========================
-// منوی سه خط
-// =========================
+/* =========================
+   MENU
+========================= */
 
-function openMenu(){
+function toggleMenu() {
 
-    let menu = document.getElementById("menuBox");
+    const menu = document.getElementById("menu");
+
+    if (!menu) return;
+
+    menu.classList.toggle("open");
+}
 
 
-    if(menu.style.display === "block"){
+/* بستن منو با کلیک روی لینک */
 
-        menu.style.display = "none";
+document.addEventListener("click", function(event) {
 
-    }else{
+    const menu = document.getElementById("menu");
+    const button = document.querySelector(".menu-btn");
 
-        menu.style.display = "block";
+    if (!menu || !button) return;
+
+    if (
+        menu.classList.contains("open") &&
+        !menu.contains(event.target) &&
+        !button.contains(event.target)
+    ) {
+
+        menu.classList.remove("open");
+
+    }
+
+});
+
+
+/* =========================
+   TIMER
+========================= */
+
+/*
+   این تاریخ برای همه کاربران یکی است.
+
+   شروع: 10 روز
+   پایان: 20 August 2026 - 00:00
+*/
+
+const targetDate =
+    new Date("2026-08-20T00:00:00+03:30").getTime();
+
+
+function updateTimer() {
+
+    const now = Date.now();
+
+    let difference = targetDate - now;
+
+
+    if (difference <= 0) {
+
+        difference = 0;
+
+    }
+
+
+    const days =
+        Math.floor(
+            difference / (1000 * 60 * 60 * 24)
+        );
+
+
+    const hours =
+        Math.floor(
+            (difference / (1000 * 60 * 60)) % 24
+        );
+
+
+    const minutes =
+        Math.floor(
+            (difference / (1000 * 60)) % 60
+        );
+
+
+    const seconds =
+        Math.floor(
+            (difference / 1000) % 60
+        );
+
+
+    const daysElement =
+        document.getElementById("days");
+
+
+    const hoursElement =
+        document.getElementById("hours");
+
+
+    const minutesElement =
+        document.getElementById("minutes");
+
+
+    const secondsElement =
+        document.getElementById("seconds");
+
+
+    if (daysElement) {
+
+        daysElement.textContent =
+            String(days).padStart(2, "0");
+
+    }
+
+
+    if (hoursElement) {
+
+        hoursElement.textContent =
+            String(hours).padStart(2, "0");
+
+    }
+
+
+    if (minutesElement) {
+
+        minutesElement.textContent =
+            String(minutes).padStart(2, "0");
+
+    }
+
+
+    if (secondsElement) {
+
+        secondsElement.textContent =
+            String(seconds).padStart(2, "0");
 
     }
 
 }
 
 
-
-
-
-// =========================
-// تایمر 15 روزه MR.YELLOW
-// =========================
-
-
-let endTime = localStorage.getItem("MR_YELLOW_TIMER");
-
-
-
-if(!endTime){
-
-    endTime =
-    new Date().getTime()
-    +
-    (15 * 24 * 60 * 60 * 1000);
-
-
-    localStorage.setItem(
-        "MR_YELLOW_TIMER",
-        endTime
-    );
-
-}
-
-
-
-
-function updateTimer(){
-
-
-    let now = new Date().getTime();
-
-
-    let distance = endTime - now;
-
-
-
-    let days =
-    Math.floor(
-        distance / (1000 * 60 * 60 * 24)
-    );
-
-
-
-    let hours =
-    Math.floor(
-        (distance / (1000 * 60 * 60)) % 24
-    );
-
-
-
-    let minutes =
-    Math.floor(
-        (distance / (1000 * 60)) % 60
-    );
-
-
-
-    let seconds =
-    Math.floor(
-        (distance / 1000) % 60
-    );
-
-
-
-
-    document.getElementById("days").innerHTML = days;
-
-
-    document.getElementById("hours").innerHTML = hours;
-
-
-    document.getElementById("minutes").innerHTML = minutes;
-
-
-    document.getElementById("seconds").innerHTML = seconds;
-
-
-
-}
-
-
-
-setInterval(updateTimer,1000);
-
-
 updateTimer();
 
+setInterval(updateTimer, 1000);
 
 
+/* =========================
+   KICK STATUS
+========================= */
+
+/*
+   فعلاً وضعیت را دستی کنترل می‌کنیم
+   تا چیزی خراب یا وابسته به API خارجی نباشد.
+
+   وقتی لایو شد:
+   true
+
+   وقتی آفلاین شد:
+   false
+*/
+
+const isLive = false;
 
 
+function updateStreamStatus() {
 
-// =========================
-// حالت لایو
-// =========================
-
-
-// false = آفلاین 🔴
-// true = لایو 🟢
+    const status =
+        document.getElementById("streamStatus");
 
 
-let liveMode = false;
+    if (!status) return;
 
 
+    if (isLive) {
 
-if(liveMode){
+        status.classList.remove("offline");
 
+        status.classList.add("online");
 
-    let live =
-    document.getElementById("liveStatus");
+        status.textContent = "🟢 ONLINE";
 
+    } else {
 
+        status.classList.remove("online");
 
-    live.classList.remove("offline");
+        status.classList.add("offline");
 
+        status.textContent = "🔴 OFFLINE";
 
-    live.classList.add("online");
-
-
-    live.innerHTML =
-    "🟢 LIVE NOW";
-
+    }
 
 }
+
+
+updateStreamStatus();
