@@ -2,180 +2,144 @@
 <html lang="fa" dir="rtl">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MR.YELLOW</title>
 
-<title>MR.YELLOW</title>
-
-<link rel="stylesheet" href="style.css">
-
+    <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
+<header>
 
-<!-- منوی سه خط -->
+    <div class="logo">
+        MR.YELLOW
+    </div>
 
-<div class="menu">
+    <button class="menu-btn" onclick="toggleMenu()" aria-label="منو">
+        ☰
+    </button>
 
-<div class="hamburger" onclick="openMenu()">
-☰
-</div>
+</header>
 
 
-<div class="menu-box" id="menuBox">
+<nav class="menu" id="menu">
 
+    <div class="menu-title">
+        MR.YELLOW 🟡
+    </div>
 
-<a href="index.html">
-🏠 خانه
-</a>
+    <a href="index.html">
+        🏠 خانه
+    </a>
 
+    <a href="social.html">
+        🌐 شبکه اجتماعی
+    </a>
 
-<a href="support.html">
-🎫 پشتیبانی
-</a>
+    <a href="comingsoon.html">
+        ⏳ بزودی
+    </a>
 
+</nav>
 
-<a href="social.html">
-🌐 شبکه‌های اجتماعی
-</a>
 
+<main>
 
-<a href="about.html">
-⚙️ درباره MR.YELLOW
-</a>
+    <section class="hero">
 
+        <div class="yellow-dot"></div>
 
-</div>
+        <h1>
+            MR.YELLOW
+        </h1>
 
-</div>
+        <p class="subtitle">
+            به دنیای MR.YELLOW خوش اومدی 🟡
+        </p>
 
 
+        <div id="streamStatus" class="status offline">
+            🔴 OFFLINE
+        </div>
 
 
-<!-- صفحه اصلی -->
+        <div class="countdown-box">
 
+            <h2>
+                شروع بزرگ
+            </h2>
 
-<div class="card">
+            <p>
+                زمان باقی‌مانده
+            </p>
 
+            <div class="timer">
 
-<div class="logo">
-MR.YELLOW
-</div>
+                <div class="time">
+                    <strong id="days">00</strong>
+                    <span>روز</span>
+                </div>
 
+                <div class="time">
+                    <strong id="hours">00</strong>
+                    <span>ساعت</span>
+                </div>
 
+                <div class="time">
+                    <strong id="minutes">00</strong>
+                    <span>دقیقه</span>
+                </div>
 
-<h1>
-به MR.YELLOW خوش آمدید 🟡
-</h1>
+                <div class="time">
+                    <strong id="seconds">00</strong>
+                    <span>ثانیه</span>
+                </div>
 
+            </div>
 
+        </div>
 
-<p class="text">
 
-این تازه اول کاره... 🚀<br><br>
+        <a
+            class="donate-btn"
+            href="https://donofa.ir/mryellow/"
+            target="_blank"
+            rel="noopener noreferrer"
+        >
+            💰 حمایت از MR.YELLOW
+        </a>
 
-ما در حال ساخت یک تجربه جدید هستیم.<br>
 
-به زودی با امکانات بیشتر و اتفاق‌های بزرگ برمی‌گردیم.
+        <div class="creator">
 
-</p>
+            <span>
+                ساخته شده توسط
+            </span>
 
+            <strong>
+                Ariyan
+            </strong>
 
+            <small>
+                @Ariyanir299
+            </small>
 
+        </div>
 
-<div class="live offline" id="liveStatus">
+    </section>
 
-🔴 OFFLINE
-
-</div>
-
-
-
-
-<h2>
-⏳ انتشار نسخه جدید تا:
-</h2>
-
-
-
-
-<div class="timer">
-
-
-<div class="box">
-
-<span id="days">0</span>
-
-<p>روز</p>
-
-</div>
-
-
-
-<div class="box">
-
-<span id="hours">0</span>
-
-<p>ساعت</p>
-
-</div>
-
-
-
-<div class="box">
-
-<span id="minutes">0</span>
-
-<p>دقیقه</p>
-
-</div>
-
-
-
-<div class="box">
-
-<span id="seconds">0</span>
-
-<p>ثانیه</p>
-
-</div>
-
-
-</div>
-
-
-
-
-<a class="donate"
-href="https://donofa.ir/mryellow"
-target="_blank">
-
-💰 حمایت از MR.YELLOW
-
-</a>
-
-
-
+</main>
 
 
 <footer>
-
-© 2026 MR.YELLOW | ساخته شده توسط Ariyan
-
+    © MR.YELLOW
 </footer>
-
-
-
-</div>
-
 
 
 <script src="script.js"></script>
 
-
 </body>
-
 </html>
