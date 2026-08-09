@@ -1,0 +1,444 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:tahoma, Arial, sans-serif;
+}
+
+
+body{
+
+    background:#050505;
+    color:white;
+    min-height:100vh;
+
+}
+
+
+/* Header */
+
+header{
+
+    height:70px;
+
+    background:#111;
+
+    border-bottom:2px solid #ffd000;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:0 20px;
+
+}
+
+
+
+.logo{
+
+    color:#ffd000;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+    text-shadow:0 0 15px #ffd000;
+
+}
+
+
+
+.menu-btn{
+
+    color:#ffd000;
+
+    font-size:35px;
+
+    cursor:pointer;
+
+}
+
+
+
+
+/* Menu */
+
+
+.menu{
+
+    position:fixed;
+
+    top:0;
+
+    right:-300px;
+
+    width:260px;
+
+    height:100%;
+
+    background:#111;
+
+    padding:25px;
+
+    border-left:2px solid #ffd000;
+
+    transition:.3s;
+
+    z-index:100;
+
+}
+
+
+.menu.active{
+
+    right:0;
+
+}
+
+
+
+.menu a{
+
+    display:block;
+
+    background:#222;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:12px;
+
+    margin:12px 0;
+
+    border-radius:12px;
+
+}
+
+
+
+.menu a:hover{
+
+    background:#ffd000;
+
+    color:black;
+
+}
+
+
+
+
+/* Main */
+
+
+.hero{
+
+    text-align:center;
+
+    padding:50px 15px;
+
+}
+
+
+
+.hero h1{
+
+    font-size:55px;
+
+    color:#ffd000;
+
+    text-shadow:0 0 25px #ffd000;
+
+}
+
+
+
+.hero p{
+
+    margin:20px;
+
+    font-size:20px;
+
+    line-height:2;
+
+}
+
+
+
+/* Cards */
+
+
+.card{
+
+    background:#111;
+
+    border:1px solid #ffd000;
+
+    border-radius:20px;
+
+    padding:25px;
+
+    max-width:450px;
+
+    margin:25px auto;
+
+}
+
+
+
+
+/* Social */
+
+.social-box{
+
+    text-align:center;
+
+}
+
+
+
+.social-btn{
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    gap:8px;
+
+    width:160px;
+
+    padding:8px;
+
+    margin:8px auto;
+
+    background:#111;
+
+    border:1px solid #ffd000;
+
+    border-radius:12px;
+
+    color:white;
+
+    text-decoration:none;
+
+    font-size:14px;
+
+    transition:.3s;
+
+}
+
+
+
+.social-btn img{
+
+    width:16px;
+
+    height:16px;
+
+}
+
+
+
+.social-btn:hover{
+
+    background:#ffd000;
+
+    color:black;
+
+    transform:scale(1.05);
+
+}
+
+
+
+
+/* Buttons */
+
+
+.btn{
+
+    display:inline-block;
+
+    background:#ffd000;
+
+    color:black;
+
+    text-decoration:none;
+
+    padding:12px 25px;
+
+    border-radius:30px;
+
+    font-weight:bold;
+
+    margin:15px;
+
+}
+
+
+
+.btn:hover{
+
+    box-shadow:0 0 20px #ffd000;
+
+}
+
+
+
+
+/* Timer */
+
+
+.timer{
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:10px;
+
+    flex-wrap:wrap;
+
+}
+
+
+
+.time{
+
+    background:#111;
+
+    border:1px solid #ffd000;
+
+    border-radius:15px;
+
+    padding:15px;
+
+    min-width:70px;
+
+}
+
+
+
+.time span{
+
+    display:block;
+
+    color:#ffd000;
+
+    font-size:28px;
+
+}
+
+
+
+
+
+/* Status */
+
+
+.status{
+
+    width:200px;
+
+    margin:25px auto;
+
+    padding:12px;
+
+    border-radius:30px;
+
+    font-weight:bold;
+
+}
+
+
+.online{
+
+    background:green;
+
+}
+
+
+
+.offline{
+
+    background:#990000;
+
+}
+
+
+
+
+
+/* Ticket */
+
+
+input,
+textarea{
+
+    width:100%;
+
+    background:#222;
+
+    color:white;
+
+    border:0;
+
+    padding:12px;
+
+    margin:8px 0;
+
+    border-radius:10px;
+
+}
+
+
+
+textarea{
+
+    height:120px;
+
+}
+
+
+
+button{
+
+    background:#ffd000;
+
+    color:black;
+
+    border:0;
+
+    padding:12px 30px;
+
+    border-radius:30px;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+}
+
+
+
+
+
+/* Footer */
+
+
+footer{
+
+    text-align:center;
+
+    padding:35px;
+
+    color:#ffd000;
+
+    font-size:15px;
+
+}
