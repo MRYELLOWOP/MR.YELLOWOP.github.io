@@ -1,122 +1,211 @@
-/* =========================
+/* =====================================
+   MR.YELLOW - SCRIPT
+===================================== */
+
+
+/* =====================================
    MENU
-========================= */
+===================================== */
 
 function toggleMenu() {
+
     const menu = document.getElementById("menu");
-    if (menu) menu.classList.toggle("open");
+
+    if (!menu) return;
+
+    menu.classList.toggle("open");
 }
 
 
-/* =========================
-   TIMER - SHARED FOR EVERYONE
-========================= */
+/* =====================================
+   CLOSE MENU WHEN CLICKING OUTSIDE
+===================================== */
 
-// زمان پایان مشترک برای همه کاربران
-// این تاریخ را بعداً فقط یک بار تغییر می‌دهیم.
-const TARGET_DATE = new Date("2026-08-20T00:00:00+03:30").getTime();
+document.addEventListener("click", function (event) {
+
+    const menu = document.getElementById("menu");
+    const button = document.querySelector(".menu-btn");
+
+    if (!menu || !button) return;
+
+    if (
+        menu.classList.contains("open") &&
+        !menu.contains(event.target) &&
+        !button.contains(event.target)
+    ) {
+
+        menu.classList.remove("open");
+
+    }
+
+});
+
+
+/* =====================================
+   COUNTDOWN
+   10 DAYS - SAME FOR EVERYONE
+===================================== */
+
+/*
+   این تاریخ برای همه کاربران یکی است.
+   Refresh باعث شروع دوباره تایمر نمی‌شود.
+*/
+
+const TARGET_DATE =
+    new Date("2026-08-20T00:00:00+03:30").getTime();
 
 
 function updateTimer() {
 
-    const remaining = Math.max(0, TARGET_DATE - Date.now());
+    const now = Date.now();
 
-    const days = Math.floor(
-        remaining / (1000 * 60 * 60 * 24)
-    );
+    let remaining = TARGET_DATE - now;
 
-    const hours = Math.floor(
-        (remaining / (1000 * 60 * 60)) % 24
-    );
 
-    const minutes = Math.floor(
-        (remaining / (1000 * 60)) % 60
-    );
+    if (remaining < 0) {
+        remaining = 0;
+    }
 
-    const seconds = Math.floor(
-        (remaining / 1000) % 60
-    );
 
-    const d = document.getElementById("days");
-    const h = document.getElementById("hours");
-    const m = document.getElementById("minutes");
-    const s = document.getElementById("seconds");
+    const days =
+        Math.floor(
+            remaining /
+            (1000 * 60 * 60 * 24)
+        );
 
-    if (d) d.textContent = String(days).padStart(2, "0");
-    if (h) h.textContent = String(hours).padStart(2, "0");
-    if (m) m.textContent = String(minutes).padStart(2, "0");
-    if (s) s.textContent = String(seconds).padStart(2, "0");
+
+    const hours =
+        Math.floor(
+            (remaining /
+            (1000 * 60 * 60)) % 24
+        );
+
+
+    const minutes =
+        Math.floor(
+            (remaining /
+            (1000 * 60)) % 60
+        );
+
+
+    const seconds =
+        Math.floor(
+            (remaining /
+            1000) % 60
+        );
+
+
+    const daysElement =
+        document.getElementById("days");
+
+
+    const hoursElement =
+        document.getElementById("hours");
+
+
+    const minutesElement =
+        document.getElementById("minutes");
+
+
+    const secondsElement =
+        document.getElementById("seconds");
+
+
+    if (daysElement) {
+
+        daysElement.textContent =
+            String(days).padStart(2, "0");
+
+    }
+
+
+    if (hoursElement) {
+
+        hoursElement.textContent =
+            String(hours).padStart(2, "0");
+
+    }
+
+
+    if (minutesElement) {
+
+        minutesElement.textContent =
+            String(minutes).padStart(2, "0");
+
+    }
+
+
+    if (secondsElement) {
+
+        secondsElement.textContent =
+            String(seconds).padStart(2, "0");
+
+    }
+
 }
 
+
+/* شروع تایمر */
+
 updateTimer();
+
+
+/* بروزرسانی هر ثانیه */
+
 setInterval(updateTimer, 1000);
 
 
-/* =========================
-   KICK STATUS
-========================= */
+/* =====================================
+   KICK LIVE STATUS
+===================================== */
 
-async function checkKickStatus() {
+/*
+   فعلاً وضعیت را دستی کنترل می‌کنیم.
 
-    const status = document.getElementById("streamStatus");
+   اگر MR.YELLOW لایو است:
+       true
+
+   اگر آفلاین است:
+       false
+*/
+
+const IS_LIVE = true;
+
+
+function updateStreamStatus() {
+
+    const status =
+        document.getElementById("streamStatus");
+
 
     if (!status) return;
 
-    try {
 
-        /*
-         * وضعیت کانال mryellowop
-         * از سرویس واسط عمومی خوانده می‌شود.
-         */
+    if (IS_LIVE === true) {
 
-        const response = await fetch(
-            "https://kick.com/api/v2/channels/mryellowop",
-            {
-                cache: "no-store"
-            }
-        );
+        status.classList.remove("offline");
 
-        if (!response.ok) {
-            throw new Error("Kick request failed");
-        }
+        status.classList.add("online");
 
-        const data = await response.json();
-
-        const live =
-            data &&
-            data.livestream !== null &&
-            data.livestream !== undefined;
-
-
-        if (live) {
-
-            status.className = "status online";
-            status.textContent = "🟢 ONLINE";
-
-        } else {
-
-            status.className = "status offline";
-            status.textContent = "🔴 OFFLINE";
-
-        }
-
-    } catch (error) {
-
-        /*
-         * اگر Kick پاسخ نداد،
-         * سایت خراب نمی‌شود.
-         */
-
-        status.className = "status offline";
-        status.textContent = "🔴 OFFLINE";
-
-        console.log("Kick status error:", error);
+        status.textContent =
+            "🟢 ONLINE";
 
     }
+
+    else {
+
+        status.classList.remove("online");
+
+        status.classList.add("offline");
+
+        status.textContent =
+            "🔴 OFFLINE";
+
+    }
+
 }
 
 
-checkKickStatus();
+/* اجرای وضعیت */
 
-// هر 60 ثانیه دوباره بررسی می‌کند
-setInterval(checkKickStatus, 60000);
+updateStreamStatus();
