@@ -163,34 +163,7 @@ main {
     font-size: 16px;
 }
 
-/* STATUS */
 
-.status {
-    width: 140px;
-
-    margin: 22px auto;
-
-    padding: 8px 12px;
-
-    border-radius: 30px;
-
-    font-size: 13px;
-    font-weight: bold;
-}
-
-.status.offline {
-    color: #ff5555;
-    border: 1px solid #ff333355;
-    background: #ff00000d;
-}
-
-.status.online {
-    color: #55ff77;
-    border: 1px solid #33ff5555;
-    background: #00ff4410;
-
-    box-shadow: 0 0 15px #00ff4420;
-}
 
 /* TIMER */
 
