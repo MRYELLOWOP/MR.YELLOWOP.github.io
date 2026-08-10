@@ -73,20 +73,3 @@ setInterval(updateTimer, 1000);
    باعث OFFLINE اشتباه نشود.
 */
 
-function setKickStatus() {
-
-    const status =
-        document.getElementById("streamStatus");
-
-    if (!status) return;
-
-
-    status.classList.remove("offline");
-
-    status.classList.add("online");
-
-    status.textContent = "🟢 ONLINE";
-}
-
-
-setKickStatus();
