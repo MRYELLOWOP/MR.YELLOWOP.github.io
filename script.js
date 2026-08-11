@@ -72,4 +72,3 @@ setInterval(updateTimer, 1000);
    فعلاً ONLINE ثابت است تا API
    باعث OFFLINE اشتباه نشود.
 */
-
