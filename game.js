@@ -19,8 +19,7 @@ const supabaseClient =
 // ELEMENTS
 // =========================
 
-const holes =
-    document.querySelectorAll(".hole");
+const holes = document.querySelectorAll(".hole");
 
 const scoreText =
     document.getElementById("score");
@@ -67,9 +66,7 @@ const scoreList =
 // =========================
 
 let score = 0;
-
 let lives = 3;
-
 let timeLeft = 180;
 
 let playerName = "";
@@ -77,19 +74,16 @@ let playerName = "";
 let running = false;
 
 let currentHole = null;
-
 let currentType = "";
 
 let moveTimer = null;
-
 let gameTimer = null;
 
 
 // =========================
-// SPEED
+// GAME SPEED
 // =========================
 
-// سرعت ثابت بازی
 const GAME_SPEED = 1000;
 
 
@@ -109,7 +103,7 @@ function startGame() {
         playerNameInput.value.trim();
 
 
-    if (playerName === "") {
+    if (!playerName) {
 
         message.textContent =
             "⚠️ اول اسمت رو وارد کن";
@@ -120,21 +114,14 @@ function startGame() {
     }
 
 
-    // مقدارهای اولیه بازی
-
     score = 0;
-
     lives = 3;
-
     timeLeft = 180;
 
     running = true;
 
 
-    // تایمرهای قبلی را پاک کن
-
     clearInterval(moveTimer);
-
     clearInterval(gameTimer);
 
 
@@ -151,12 +138,8 @@ function startGame() {
     updateUI();
 
 
-    // اولین هدف
-
     showTarget();
 
-
-    // حرکت هدف با سرعت ثابت
 
     moveTimer =
         setInterval(
@@ -164,8 +147,6 @@ function startGame() {
             GAME_SPEED
         );
 
-
-    // تایمر ۳ دقیقه‌ای
 
     gameTimer =
         setInterval(
@@ -177,7 +158,6 @@ function startGame() {
 
 
                 timeLeft--;
-
 
                 updateTime();
 
@@ -208,48 +188,40 @@ function showTarget() {
     clearBoard();
 
 
-    const randomIndex =
+    const index =
         Math.floor(
             Math.random() * holes.length
         );
 
 
     currentHole =
-        holes[randomIndex];
+        holes[index];
 
 
     const image =
         document.createElement("img");
 
 
-    /*
-        35 درصد دماغ
-        65 درصد فتاح
-    */
+    // 35 درصد دماغ
+    // 65 درصد فتاح
 
     if (Math.random() < 0.35) {
 
-        currentType =
-            "bomb";
+        currentType = "bomb";
 
-        image.src =
-            "bomb.png";
+        image.src = "bomb.png";
 
-        image.alt =
-            "دماغ";
+        image.alt = "دماغ";
 
     }
 
     else {
 
-        currentType =
-            "target";
+        currentType = "target";
 
-        image.src =
-            "target.png";
+        image.src = "target.png";
 
-        image.alt =
-            "فتاح";
+        image.alt = "فتاح";
 
     }
 
@@ -258,14 +230,12 @@ function showTarget() {
         "game-image";
 
 
-    currentHole.appendChild(
-        image
-    );
+    currentHole.appendChild(image);
 }
 
 
 // =========================
-// HOLE CLICK
+// CLICK HOLES
 // =========================
 
 holes.forEach(
@@ -287,9 +257,7 @@ holes.forEach(
                 }
 
 
-                // =====================
-                // NOSE
-                // =====================
+                // دماغ
 
                 if (
                     currentType === "bomb"
@@ -312,32 +280,25 @@ holes.forEach(
 
                         endGame(true);
 
-                        return;
-
                     }
 
+                    return;
                 }
 
 
-                // =====================
-                // FATAH
-                // =====================
+                // فتاح
 
-                else {
-
-                    score++;
+                score++;
 
 
-                    message.textContent =
-                        "🔥 آفرین!";
+                message.textContent =
+                    "🔥 آفرین!";
 
 
-                    updateUI();
+                updateUI();
 
 
-                    clearBoard();
-
-                }
+                clearBoard();
 
             }
         );
@@ -363,29 +324,17 @@ async function endGame(
 
 
     clearInterval(moveTimer);
-
     clearInterval(gameTimer);
 
 
     moveTimer = null;
-
     gameTimer = null;
 
 
     clearBoard();
 
 
-    // =====================
-    // LOST ALL LIVES
-    // =====================
-
     if (lostAllLives) {
-
-        startBtn.disabled = false;
-
-        startBtn.textContent =
-            "🔄 دوباره بازی کن";
-
 
         message.textContent =
             "💥 باختی! امتیازت: " +
@@ -393,18 +342,7 @@ async function endGame(
 
     }
 
-
-    // =====================
-    // TIME OVER
-    // =====================
-
     else {
-
-        startBtn.disabled = false;
-
-        startBtn.textContent =
-            "🔄 دوباره بازی کن";
-
 
         message.textContent =
             "⏱️ زمان تمام شد! امتیازت: " +
@@ -413,7 +351,11 @@ async function endGame(
     }
 
 
-    // ذخیره رکورد
+    startBtn.disabled = false;
+
+    startBtn.textContent =
+        "🔄 دوباره بازی کن";
+
 
     await saveScore();
 
@@ -421,7 +363,7 @@ async function endGame(
 
 
 // =========================
-// SAVE / UPDATE SCORE
+// SAVE SCORE
 // =========================
 
 async function saveScore() {
@@ -431,67 +373,82 @@ async function saveScore() {
     }
 
 
-    // اول ببینیم این اسم قبلاً وجود دارد یا نه
+    /*
+       اسم را تمیز می‌کنیم تا مثلاً:
 
-    const { data: oldPlayer, error: findError } =
+       Ariyan
+       ariyan
+       Ariyan
+
+       به خاطر فاصله یا حروف کوچک
+       باعث رکوردهای بی‌دلیل نشوند.
+    */
+
+    const cleanName =
+        playerName
+            .trim()
+            .replace(/\s+/g, " ");
+
+
+    // پیدا کردن رکورد قبلی
+
+    const { data, error } =
         await supabaseClient
             .from("scores")
-            .select("name, score")
-            .eq("name", playerName)
+            .select("id, name, score")
+            .eq("name", cleanName)
+            .limit(1)
             .maybeSingle();
 
 
-    if (findError) {
+    if (error) {
 
         console.error(
-            "Find player error:",
-            findError
+            "Find score error:",
+            error
         );
 
         return;
     }
 
 
-    // =====================
-    // PLAYER EXISTS
-    // =====================
+    // =========================
+    // NAME ALREADY EXISTS
+    // =========================
 
-    if (oldPlayer) {
+    if (data) {
 
         const oldScore =
-            Number(oldPlayer.score) || 0;
+            Number(data.score) || 0;
 
 
-        // اگر رکورد جدید بهتر نیست
-        // همان رکورد قبلی باقی بماند
+        /*
+           اگر امتیاز جدید بیشتر باشد،
+           همان رکورد قبلی آپدیت می‌شود.
+        */
 
-        if (score <= oldScore) {
+        if (score > oldScore) {
 
-            return;
-        }
+            const { error: updateError } =
+                await supabaseClient
+                    .from("scores")
+                    .update({
+                        score: score
+                    })
+                    .eq(
+                        "id",
+                        data.id
+                    );
 
 
-        // رکورد بهتر شده
-        // فقط امتیاز را آپدیت کن
+            if (updateError) {
 
-        const { error: updateError } =
-            await supabaseClient
-                .from("scores")
-                .update({
-                    score: score
-                })
-                .eq(
-                    "name",
-                    playerName
+                console.error(
+                    "Update score error:",
+                    updateError
                 );
 
-
-        if (updateError) {
-
-            console.error(
-                "Update score error:",
-                updateError
-            );
+            }
 
         }
 
@@ -500,16 +457,16 @@ async function saveScore() {
     }
 
 
-    // =====================
-    // NEW PLAYER
-    // =====================
+    // =========================
+    // NEW NAME
+    // =========================
 
     const { error: insertError } =
         await supabaseClient
             .from("scores")
             .insert([
                 {
-                    name: playerName,
+                    name: cleanName,
                     score: score
                 }
             ]);
@@ -667,8 +624,6 @@ closeGuide.addEventListener(
 );
 
 
-// بستن راهنما با کلیک بیرون
-
 guideModal.addEventListener(
     "click",
     function (event) {
@@ -702,8 +657,6 @@ closeScores.addEventListener(
     }
 );
 
-
-// بستن جدول با کلیک بیرون
 
 scoresModal.addEventListener(
     "click",
@@ -741,6 +694,7 @@ function updateUI() {
 
 
     updateTime();
+
 }
 
 
