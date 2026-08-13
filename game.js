@@ -67,39 +67,40 @@ const scoreList =
 // =========================
 
 let score = 0;
+
 let lives = 3;
+
 let timeLeft = 180;
+
 let playerName = "";
+
 let running = false;
 
 let currentHole = null;
+
 let currentType = "";
 
 let moveTimer = null;
-let timer = null;
+
+let gameTimer = null;
 
 
 // =========================
-// SPEED SETTINGS
+// SPEED
 // =========================
 
-// سرعت شروع
-const START_SPEED = 1000;
-
-// میزان افزایش سرعت
-const SPEED_STEP = 12;
-
-// سریع‌تر از این نشود
-const MIN_SPEED = 550;
-
-let speed = START_SPEED;
+// سرعت ثابت بازی
+const GAME_SPEED = 1000;
 
 
 // =========================
 // START GAME
 // =========================
 
-startBtn.onclick = startGame;
+startBtn.addEventListener(
+    "click",
+    startGame
+);
 
 
 function startGame() {
@@ -110,9 +111,8 @@ function startGame() {
 
     if (playerName === "") {
 
-        alert(
-            "لطفاً اسم خودت را وارد کن"
-        );
+        message.textContent =
+            "⚠️ اول اسمت رو وارد کن";
 
         playerNameInput.focus();
 
@@ -120,19 +120,22 @@ function startGame() {
     }
 
 
+    // مقدارهای اولیه بازی
+
     score = 0;
 
     lives = 3;
 
     timeLeft = 180;
 
-    speed = START_SPEED;
-
     running = true;
 
 
+    // تایمرهای قبلی را پاک کن
+
     clearInterval(moveTimer);
-    clearInterval(timer);
+
+    clearInterval(gameTimer);
 
 
     startBtn.disabled = true;
@@ -148,17 +151,23 @@ function startGame() {
     updateUI();
 
 
+    // اولین هدف
+
     showTarget();
 
+
+    // حرکت هدف با سرعت ثابت
 
     moveTimer =
         setInterval(
             showTarget,
-            speed
+            GAME_SPEED
         );
 
 
-    timer =
+    // تایمر ۳ دقیقه‌ای
+
+    gameTimer =
         setInterval(
             function () {
 
@@ -168,6 +177,7 @@ function startGame() {
 
 
                 timeLeft--;
+
 
                 updateTime();
 
@@ -198,14 +208,14 @@ function showTarget() {
     clearBoard();
 
 
-    const random =
+    const randomIndex =
         Math.floor(
             Math.random() * holes.length
         );
 
 
     currentHole =
-        holes[random];
+        holes[randomIndex];
 
 
     const image =
@@ -213,13 +223,14 @@ function showTarget() {
 
 
     /*
-        35 درصد = دماغ
-        65 درصد = فتاح
+        35 درصد دماغ
+        65 درصد فتاح
     */
 
     if (Math.random() < 0.35) {
 
-        currentType = "bomb";
+        currentType =
+            "bomb";
 
         image.src =
             "bomb.png";
@@ -231,7 +242,8 @@ function showTarget() {
 
     else {
 
-        currentType = "target";
+        currentType =
+            "target";
 
         image.src =
             "target.png";
@@ -253,13 +265,14 @@ function showTarget() {
 
 
 // =========================
-// CLICK
+// HOLE CLICK
 // =========================
 
 holes.forEach(
     function (hole) {
 
-        hole.onclick =
+        hole.addEventListener(
+            "click",
             function () {
 
                 if (!running) {
@@ -274,9 +287,9 @@ holes.forEach(
                 }
 
 
-                // =================
-                // BOMB / NOSE
-                // =================
+                // =====================
+                // NOSE
+                // =====================
 
                 if (
                     currentType === "bomb"
@@ -286,7 +299,7 @@ holes.forEach(
 
 
                     message.textContent =
-                        "💣 اشتباه زدی!";
+                        "💣 دماغ بود!";
 
 
                     updateUI();
@@ -306,9 +319,9 @@ holes.forEach(
                 }
 
 
-                // =================
-                // TARGET / FATAH
-                // =================
+                // =====================
+                // FATAH
+                // =====================
 
                 else {
 
@@ -319,9 +332,6 @@ holes.forEach(
                         "🔥 آفرین!";
 
 
-                    increaseSpeed();
-
-
                     updateUI();
 
 
@@ -329,54 +339,11 @@ holes.forEach(
 
                 }
 
-            };
+            }
+        );
 
     }
 );
-
-
-// =========================
-// SPEED
-// =========================
-
-function increaseSpeed() {
-
-    /*
-        سرعت خیلی آرام زیاد می‌شود.
-
-        score = 0
-        1000ms
-
-        score = 10
-        880ms
-
-        score = 20
-        760ms
-
-        score = 30
-        640ms
-
-        حداقل = 550ms
-    */
-
-
-    speed =
-        Math.max(
-            MIN_SPEED,
-            START_SPEED -
-            (score * SPEED_STEP)
-        );
-
-
-    clearInterval(moveTimer);
-
-
-    moveTimer =
-        setInterval(
-            showTarget,
-            speed
-        );
-}
 
 
 // =========================
@@ -384,7 +351,7 @@ function increaseSpeed() {
 // =========================
 
 async function endGame(
-    lostAllLives = false
+    lostAllLives
 ) {
 
     if (!running) {
@@ -396,19 +363,21 @@ async function endGame(
 
 
     clearInterval(moveTimer);
-    clearInterval(timer);
+
+    clearInterval(gameTimer);
 
 
     moveTimer = null;
-    timer = null;
+
+    gameTimer = null;
 
 
     clearBoard();
 
 
-    // =========================
-    // LOST
-    // =========================
+    // =====================
+    // LOST ALL LIVES
+    // =====================
 
     if (lostAllLives) {
 
@@ -425,9 +394,9 @@ async function endGame(
     }
 
 
-    // =========================
+    // =====================
     // TIME OVER
-    // =========================
+    // =====================
 
     else {
 
@@ -444,13 +413,15 @@ async function endGame(
     }
 
 
+    // ذخیره رکورد
+
     await saveScore();
 
 }
 
 
 // =========================
-// SAVE SCORE
+// SAVE / UPDATE SCORE
 // =========================
 
 async function saveScore() {
@@ -460,7 +431,80 @@ async function saveScore() {
     }
 
 
-    const { error } =
+    // اول ببینیم این اسم قبلاً وجود دارد یا نه
+
+    const { data: oldPlayer, error: findError } =
+        await supabaseClient
+            .from("scores")
+            .select("name, score")
+            .eq("name", playerName)
+            .maybeSingle();
+
+
+    if (findError) {
+
+        console.error(
+            "Find player error:",
+            findError
+        );
+
+        return;
+    }
+
+
+    // =====================
+    // PLAYER EXISTS
+    // =====================
+
+    if (oldPlayer) {
+
+        const oldScore =
+            Number(oldPlayer.score) || 0;
+
+
+        // اگر رکورد جدید بهتر نیست
+        // همان رکورد قبلی باقی بماند
+
+        if (score <= oldScore) {
+
+            return;
+        }
+
+
+        // رکورد بهتر شده
+        // فقط امتیاز را آپدیت کن
+
+        const { error: updateError } =
+            await supabaseClient
+                .from("scores")
+                .update({
+                    score: score
+                })
+                .eq(
+                    "name",
+                    playerName
+                );
+
+
+        if (updateError) {
+
+            console.error(
+                "Update score error:",
+                updateError
+            );
+
+        }
+
+
+        return;
+    }
+
+
+    // =====================
+    // NEW PLAYER
+    // =====================
+
+    const { error: insertError } =
         await supabaseClient
             .from("scores")
             .insert([
@@ -471,11 +515,11 @@ async function saveScore() {
             ]);
 
 
-    if (error) {
+    if (insertError) {
 
         console.error(
-            "Supabase save error:",
-            error
+            "Insert score error:",
+            insertError
         );
 
     }
@@ -487,8 +531,10 @@ async function saveScore() {
 // SCORE TABLE
 // =========================
 
-scoresBtn.onclick =
-    loadScores;
+scoresBtn.addEventListener(
+    "click",
+    loadScores
+);
 
 
 async function loadScores() {
@@ -518,13 +564,13 @@ async function loadScores() {
     if (error) {
 
         console.error(
-            "Supabase score error:",
+            "Load scores error:",
             error
         );
 
 
         scoreList.innerHTML =
-            "❌ خطا در دریافت امتیازات";
+            "❌ خطا در دریافت جدول";
 
 
         return;
@@ -590,7 +636,6 @@ async function loadScores() {
 
         }
     );
-
 }
 
 
@@ -598,45 +643,34 @@ async function loadScores() {
 // GUIDE
 // =========================
 
-guideBtn.onclick =
+guideBtn.addEventListener(
+    "click",
     function () {
 
         guideModal.classList.add(
             "open"
         );
 
-    };
+    }
+);
 
 
-closeGuide.onclick =
+closeGuide.addEventListener(
+    "click",
     function () {
 
         guideModal.classList.remove(
             "open"
         );
 
-    };
+    }
+);
 
 
-// =========================
-// CLOSE SCORE TABLE
-// =========================
+// بستن راهنما با کلیک بیرون
 
-closeScores.onclick =
-    function () {
-
-        scoresModal.classList.remove(
-            "open"
-        );
-
-    };
-
-
-// =========================
-// CLOSE GUIDE OUTSIDE
-// =========================
-
-guideModal.onclick =
+guideModal.addEventListener(
+    "click",
     function (event) {
 
         if (
@@ -649,14 +683,30 @@ guideModal.onclick =
 
         }
 
-    };
+    }
+);
 
 
 // =========================
-// CLOSE SCORES OUTSIDE
+// CLOSE SCORE TABLE
 // =========================
 
-scoresModal.onclick =
+closeScores.addEventListener(
+    "click",
+    function () {
+
+        scoresModal.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+// بستن جدول با کلیک بیرون
+
+scoresModal.addEventListener(
+    "click",
     function (event) {
 
         if (
@@ -669,11 +719,12 @@ scoresModal.onclick =
 
         }
 
-    };
+    }
+);
 
 
 // =========================
-// UI
+// UPDATE UI
 // =========================
 
 function updateUI() {
@@ -690,31 +741,35 @@ function updateUI() {
 
 
     updateTime();
-
 }
 
 
 // =========================
-// TIME
+// UPDATE TIME
 // =========================
 
 function updateTime() {
 
-    const min =
+    const minutes =
         Math.floor(
             timeLeft / 60
         );
 
 
-    const sec =
+    const seconds =
         timeLeft % 60;
 
 
     timeText.textContent =
-        String(min).padStart(2, "0") +
+        String(minutes).padStart(
+            2,
+            "0"
+        ) +
         ":" +
-        String(sec).padStart(2, "0");
-
+        String(seconds).padStart(
+            2,
+            "0"
+        );
 }
 
 
@@ -736,7 +791,6 @@ function clearBoard() {
     currentHole = null;
 
     currentType = "";
-
 }
 
 
