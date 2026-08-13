@@ -2,24 +2,16 @@
 <html lang="fa" dir="rtl">
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
+    <title>MR.YELLOW GAME</title>
 
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>MR.YELLOW GAME</title>
-
-
-<link rel="stylesheet" href="style.css">
-
-<link rel="stylesheet" href="game.css">
-
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="game.css">
 </head>
 
-
 <body>
-
 
 <header>
 
@@ -27,337 +19,217 @@
         MR.YELLOW 🟡
     </div>
 
-
     <a class="back-game" href="index.html">
-        🏠 خانه
+        🏠 برگشت به خانه
     </a>
 
 </header>
 
 
-
-
-
 <main class="game-page">
 
+    <h1>
+        🔨 فتاح و دماغش
+    </h1>
 
-<h1>
-    🔨 فتاح و دماغش
-</h1>
+    <p class="game-sub">
+        فتاح رو بزن، دماغش رو نزن! 😂
+    </p>
 
 
-<p class="game-sub">
-    فتاح رو بزن، دماغش رو نزن! 😂
-</p>
+    <div class="player-name-box">
 
+        <label for="playerName">
+            نام بازیکن
+        </label>
 
+        <input
+            id="playerName"
+            type="text"
+            maxlength="15"
+            placeholder="مثلاً Ariyan"
+            autocomplete="off"
+        >
 
+    </div>
 
 
+    <div class="game-info">
 
-<div class="player-name-box">
+        <div>
+            امتیاز
 
+            <strong id="score">
+                0
+            </strong>
+        </div>
 
-<label>
-    نام بازیکن
-</label>
 
+        <div>
+            زمان
 
-<input
-    id="playerName"
-    type="text"
-    maxlength="15"
-    placeholder="مثلاً Ariyan"
->
+            <strong id="gameTime">
+                03:00
+            </strong>
+        </div>
 
 
-</div>
+        <div>
+            جان
 
+            <strong id="lives">
+                ❤️❤️❤️
+            </strong>
+        </div>
 
+    </div>
 
 
+    <div class="game-board">
 
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
 
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
 
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
 
-<div class="game-info">
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
+        <button class="hole" type="button"></button>
 
+    </div>
 
-<div>
 
-    امتیاز
+    <button
+        id="startBtn"
+        class="start-btn"
+        type="button"
+    >
+        🎮 شروع بازی
+    </button>
 
-    <strong id="score">
-        0
-    </strong>
 
-</div>
+    <p id="gameMessage">
+        اسم را وارد کن و شروع کن
+    </p>
 
 
+    <div class="game-buttons">
 
-<div>
-
-    زمان
-
-    <strong id="gameTime">
-        03:00
-    </strong>
-
-</div>
-
-
-
-<div>
-
-    جان
-
-    <strong id="lives">
-        ❤️❤️❤️
-    </strong>
-
-</div>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<div class="game-board">
-
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-<button class="hole"></button>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-<button id="startBtn" class="start-btn">
-
-🎮 شروع بازی
-
-</button>
-
-
-
-
-
-<p id="gameMessage">
-
-اسم را وارد کن و شروع کن
-
-</p>
-
-
-
-
-
-
-
-
-
-<div class="game-buttons">
-
-
-<button id="guideBtn">
-
-📖 راهنما
-
-</button>
-
-
-
-
-<button id="scoresBtn">
-
-🏆 جدول امتیازات
-
-</button>
-
-
-</div>
-
-
-
-
-
-
-
+        <button
+            id="guideBtn"
+            type="button"
+        >
+            📖 راهنما
+        </button>
+
+        <button
+            id="scoresBtn"
+            type="button"
+        >
+            🏆 جدول امتیازات
+        </button>
+
+    </div>
+
+</main>
 
 
 <!-- GUIDE -->
 
+<div
+    class="game-modal"
+    id="guideModal"
+>
 
-<div class="game-modal" id="guideModal">
+    <div class="modal-box">
 
+        <button
+            id="closeGuide"
+            type="button"
+        >
+            ✖
+        </button>
 
-<div class="modal-box">
+        <h2>
+            📖 راهنما
+        </h2>
 
+        <p>
+            👨 فتاح = +۱ امتیاز
+            <br>
 
-<button id="closeGuide">
+            💣 دماغ = کم شدن جان
+            <br>
 
-✖
+            ❤️ سه جان داری
+            <br>
 
-</button>
+            ⏱️ سه دقیقه زمان داری
+        </p>
 
-
-<h2>
-📖 راهنما
-</h2>
-
-
-<p>
-
-👨 فتاح = +۱ امتیاز
-
-<br>
-
-💣 دماغ = کم شدن جان
-
-<br>
-
-❤️ سه جان داری
-
-<br>
-
-⏱️ سه دقیقه زمان داری
-
-
-</p>
-
-
-</div>
+    </div>
 
 </div>
 
 
+<!-- SCORE TABLE -->
 
+<div
+    class="game-modal"
+    id="scoresModal"
+>
 
+    <div class="modal-box">
 
+        <button
+            id="closeScores"
+            type="button"
+        >
+            ✖
+        </button>
 
+        <h2>
+            🏆 جدول امتیازات
+        </h2>
 
+        <div id="scoreList">
+            در حال دریافت...
+        </div>
 
-
-<!-- SCORES -->
-
-
-<div class="game-modal" id="scoresModal">
-
-
-<div class="modal-box">
-
-
-<button id="closeScores">
-
-✖
-
-</button>
-
-
-<h2>
-🏆 جدول امتیازات
-</h2>
-
-
-<div id="scoreList">
-
-در حال دریافت...
+    </div>
 
 </div>
-
-
-</div>
-
-</div>
-
-
-
-
-
-
 
 
 <footer>
 
+    © MR.YELLOW
 
-© MR.YELLOW
+    <br>
 
+    ساخته شده توسط
 
-<br>
-
-
-ساخته شده توسط
-
-
-<strong>
-Ariyan
-</strong>
-
+    <strong>
+        Ariyan
+    </strong>
 
 </footer>
 
 
-
-
-
-
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-
 <script src="game.js"></script>
-
-
 
 </body>
 
